@@ -242,10 +242,10 @@ class Game {
             y = -margin;
         } else if (edge === 1) { // Right
             x = this.width + margin;
-            y = Math.random() * (this.height / 2);
+            y = Math.random() * (this.height / 3); // Upper third only
         } else { // Left
             x = -margin;
-            y = Math.random() * (this.height / 2);
+            y = Math.random() * (this.height / 3); // Upper third only
         }
 
         const typeRoll = Math.random();
@@ -259,7 +259,9 @@ class Game {
             }
         } else {
             if (typeRoll < 0.15) {
-                this.oniList.push(new Fuku(x, y));
+                // Fuku spawns from top center area to avoid sticking to edges
+                const fukuX = Math.random() * (this.width - 100) + 50;
+                this.oniList.push(new Fuku(fukuX, -margin));
             } else if (typeRoll < 0.35) {
                 this.oniList.push(new Oni(x, y, 'blue'));
             } else {
@@ -282,6 +284,9 @@ class Game {
             if (this.timeLeft <= 7) {
                 this.ui.timer.style.color = '#FFD700';
                 this.ui.timer.style.transform = `scale(${1 + Math.random() * 0.2})`;
+                this.canvas.classList.add('fever-mode');
+            } else {
+                this.canvas.classList.remove('fever-mode');
             }
 
             if (this.timeLeft <= 0) {
@@ -402,14 +407,8 @@ class Game {
         this.beans.forEach(bean => bean.draw(this.ctx, this.scaleFactor));
         this.popups.forEach(p => p.draw(this.ctx));
 
-        // Draw Fever Overlay
+        // Draw Fever Overlay Text (Background is handled by CSS)
         if (this.timeLeft <= 7 && this.gameState === 'PLAYING') {
-            this.ctx.save();
-            this.ctx.globalAlpha = 0.1 + Math.sin(Date.now() / 100) * 0.05;
-            this.ctx.fillStyle = '#FFD700';
-            this.ctx.fillRect(0, 0, this.width, this.height);
-            this.ctx.restore();
-
             this.ctx.save();
             this.ctx.font = 'bold 40px "Mochiy Pop One", sans-serif';
             this.ctx.fillStyle = `rgba(255, 215, 0, ${0.5 + Math.sin(Date.now() / 100) * 0.3})`;
