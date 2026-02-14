@@ -59,6 +59,9 @@ class Game {
 
         this.input = new InputHandler(this);
 
+        // Responsive Scale
+        this.scaleFactor = 1.0;
+
         // Game State
         this.gameState = 'START'; // START, PLAYING, PAUSED, END
         this.score = 0;
@@ -116,11 +119,17 @@ class Game {
         this.resize();
     }
 
+
+
     resize() {
         this.canvas.width = this.canvas.parentElement.clientWidth;
         this.canvas.height = this.canvas.parentElement.clientHeight;
         this.width = this.canvas.width;
         this.height = this.canvas.height;
+
+        // Calculate scale factor based on width
+        // Base width 600px. If smaller, scale down. Min 0.6.
+        this.scaleFactor = Math.min(1.0, Math.max(0.6, this.width / 600));
     }
 
     toggleSkin() {
@@ -335,7 +344,10 @@ class Game {
                 const dy = bean.y - oni.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (dist < bean.radius + oni.radius + 10) {
+                // Adjust collision radius by scaleFactor
+                const combinedRadius = (bean.radius * this.scaleFactor) + (oni.radius * this.scaleFactor) + 10;
+
+                if (dist < combinedRadius) {
                     hit = true;
                     this.handleHit(oni);
                     this.oniList.splice(oIndex, 1);
@@ -385,9 +397,9 @@ class Game {
     draw() {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
-        this.particles.forEach(p => p.draw(this.ctx));
-        this.oniList.forEach(oni => oni.draw(this.ctx, this.currentSkin));
-        this.beans.forEach(bean => bean.draw(this.ctx));
+        this.particles.forEach(p => p.draw(this.ctx, this.scaleFactor));
+        this.oniList.forEach(oni => oni.draw(this.ctx, this.currentSkin, this.scaleFactor));
+        this.beans.forEach(bean => bean.draw(this.ctx, this.scaleFactor));
         this.popups.forEach(p => p.draw(this.ctx));
 
         // Draw Fever Overlay
@@ -437,14 +449,21 @@ class Bean {
         this.vy += 0.15;
     }
 
-    draw(ctx) {
+    draw(ctx, scale = 1.0) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.scale(scale, scale);
+
         ctx.beginPath();
-        ctx.ellipse(this.x, this.y, this.radius, this.radius * 0.8, Math.PI / 4, 0, Math.PI * 2);
+        // Draw relative to (0,0) after translate
+        ctx.ellipse(0, 0, this.radius, this.radius * 0.8, Math.PI / 4, 0, Math.PI * 2);
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.strokeStyle = '#D68C45';
         ctx.lineWidth = 1;
         ctx.stroke();
+
+        ctx.restore();
     }
 
     isOffScreen(w, h) {
@@ -481,9 +500,10 @@ class Oni extends Entity {
         this.y += Math.sin(angle) * this.speed;
     }
 
-    draw(ctx, skin) {
+    draw(ctx, skin, scale = 1.0) {
         ctx.save();
         ctx.translate(this.x, this.y);
+        ctx.scale(scale, scale);
 
         if (skin === 'cute') {
             this.drawCute(ctx);
@@ -620,9 +640,10 @@ class Fuku extends Entity {
         this.x += Math.sin(this.y / 60 + this.phase) * 1.5;
     }
 
-    draw(ctx, skin) {
+    draw(ctx, skin, scale = 1.0) {
         ctx.save();
         ctx.translate(this.x, this.y);
+        ctx.scale(scale, scale);
 
         if (skin === 'cute') {
             this.drawCute(ctx);
@@ -739,14 +760,16 @@ class Particle {
         this.size *= 0.95;
     }
 
-    draw(ctx) {
+    draw(ctx, scale = 1.0) {
         if (this.life <= 0) return;
         ctx.save();
         ctx.globalAlpha = this.life;
         ctx.fillStyle = this.color;
 
         ctx.translate(this.x, this.y);
+        ctx.scale(scale, scale);
         ctx.rotate(this.life * 10);
+
         ctx.beginPath();
         ctx.moveTo(0, -this.size);
         ctx.lineTo(this.size, this.size);
