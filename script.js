@@ -367,7 +367,7 @@ class Game {
     }
 
     createExplosion(x, y, color) {
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 8; i++) {
             this.particles.push(new Particle(x, y, color));
         }
     }
@@ -532,15 +532,7 @@ class Oni extends Entity {
         ctx.beginPath();
         ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = mainColor;
-        if (this.type === 'gold') {
-            ctx.shadowColor = '#FFD700';
-            ctx.shadowBlur = 15;
-        } else {
-            ctx.shadowColor = 'rgba(0,0,0,0.2)';
-            ctx.shadowBlur = 10;
-        }
         ctx.fill();
-        ctx.shadowBlur = 0;
 
         ctx.fillStyle = '#F4A261';
         if (this.type === 'blue') {
@@ -632,8 +624,6 @@ class Fuku extends Entity {
 
     drawCute(ctx) {
         // Neko Style: Cream body, fat, ears
-        ctx.shadowColor = '#FFD700';
-        ctx.shadowBlur = 15;
 
         // Start Body
         ctx.fillStyle = '#FFFDD0'; // Cream
@@ -655,7 +645,6 @@ class Fuku extends Entity {
         ctx.beginPath();
         ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
         ctx.fill();
-        ctx.shadowBlur = 0;
 
         // Calico Spot (optional, maybe simple spots)
         ctx.fillStyle = '#CD853F'; // Light Brown
@@ -685,14 +674,10 @@ class Fuku extends Entity {
     }
 
     drawDefault(ctx) {
-        ctx.shadowColor = '#FFD700';
-        ctx.shadowBlur = 15;
-
         ctx.beginPath();
         ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = '#FFF5E1';
         ctx.fill();
-        ctx.shadowBlur = 0;
 
         ctx.fillStyle = '#333';
         ctx.beginPath();
