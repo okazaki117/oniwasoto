@@ -60,7 +60,7 @@ class Game {
         this.input = new InputHandler(this);
 
         // Game State
-        this.gameState = 'START'; // START, PLAYING, END
+        this.gameState = 'START'; // START, PLAYING, PAUSED, END
         this.score = 0;
         this.timeLeft = 30;
         this.gameTime = 0;
@@ -82,7 +82,13 @@ class Game {
             timer: document.getElementById('timer'),
             finalScore: document.getElementById('final-score'),
             skinBtn: document.getElementById('skin-btn'),
-            container: document.getElementById('game-container')
+            container: document.getElementById('game-container'),
+            pauseBtn: document.getElementById('pause-btn'),
+            pauseScreen: document.getElementById('pause-screen'),
+            resumeBtn: document.getElementById('resume-btn'),
+            pauseRestartBtn: document.getElementById('pause-restart-btn'),
+            pauseTopBtn: document.getElementById('pause-top-btn'),
+            gameoverTopBtn: document.getElementById('gameover-top-btn')
         };
 
         // Bind methods
@@ -91,11 +97,20 @@ class Game {
         this.start = this.start.bind(this);
         this.restart = this.restart.bind(this);
         this.toggleSkin = this.toggleSkin.bind(this);
+        this.togglePause = this.togglePause.bind(this);
+        this.returnToTop = this.returnToTop.bind(this);
 
         // Event Listeners for UI
         document.getElementById('start-btn').addEventListener('click', this.start);
         document.getElementById('restart-btn').addEventListener('click', this.start);
         this.ui.skinBtn.addEventListener('click', this.toggleSkin);
+
+        this.ui.pauseBtn.addEventListener('click', this.togglePause);
+        this.ui.resumeBtn.addEventListener('click', this.togglePause);
+        this.ui.pauseRestartBtn.addEventListener('click', this.restart);
+        this.ui.pauseTopBtn.addEventListener('click', this.returnToTop);
+        this.ui.gameoverTopBtn.addEventListener('click', this.returnToTop);
+
         window.addEventListener('resize', this.resize);
 
         this.resize();
@@ -118,6 +133,34 @@ class Game {
         }
     }
 
+    togglePause() {
+        if (this.gameState === 'PLAYING') {
+            this.gameState = 'PAUSED';
+            this.ui.pauseScreen.classList.remove('hidden');
+            this.ui.pauseBtn.classList.add('hidden'); // Hide pause button while paused
+        } else if (this.gameState === 'PAUSED') {
+            this.gameState = 'PLAYING';
+            this.ui.pauseScreen.classList.add('hidden');
+            this.ui.pauseBtn.classList.remove('hidden');
+            this.lastTime = performance.now(); // Reset delta time
+        }
+    }
+
+    returnToTop() {
+        this.gameState = 'START';
+        this.ui.pauseScreen.classList.add('hidden');
+        this.ui.gameOverScreen.classList.add('hidden');
+        this.ui.hud.classList.add('hidden');
+        this.ui.pauseBtn.classList.add('hidden');
+        this.ui.startScreen.classList.remove('hidden');
+
+        // Reset scene
+        this.beans = [];
+        this.oniList = [];
+        this.particles = [];
+        this.popups = [];
+    }
+
     start() {
         this.gameState = 'PLAYING';
         this.score = 0;
@@ -136,7 +179,9 @@ class Game {
 
         this.ui.startScreen.classList.add('hidden');
         this.ui.gameOverScreen.classList.add('hidden');
+        this.ui.pauseScreen.classList.add('hidden'); // Ensure pause screen is hidden
         this.ui.hud.classList.remove('hidden');
+        this.ui.pauseBtn.classList.remove('hidden');
 
         this.lastTime = performance.now();
         requestAnimationFrame(this.loop);
@@ -146,10 +191,16 @@ class Game {
         this.gameState = 'END';
         this.ui.finalScore.innerText = this.score;
         this.ui.hud.classList.add('hidden');
+        this.ui.pauseBtn.classList.add('hidden');
         this.ui.gameOverScreen.classList.remove('hidden');
     }
 
     restart() {
+        this.togglePause(); // If restarting from pause, toggle logic handles UI hiding
+        if (this.gameState === 'PAUSED') {
+            // Logic handled by start() called immediately after, but we need to reset UI state if coming from pause
+            this.ui.pauseScreen.classList.add('hidden');
+        }
         this.start();
     }
 

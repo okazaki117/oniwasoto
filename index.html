@@ -16,24 +16,35 @@
     <div id="game-container">
         <canvas id="gameCanvas"></canvas>
         <div id="ui-layer">
-            <div id="hud" class="hidden">
-                <div class="score-container">スコア: <span id="score">0</span></div>
-                <div class="timer-container">残り時間: <span id="timer">60</span></div>
-            </div>
-            <div id="start-screen" class="screen">
-                <h1 class="title">おにはそと！</h1>
-                <p class="subtitle">マウスで豆を投げて鬼を追い払おう！</p>
-                <div class="button-group">
-                    <button id="start-btn" class="btn">ゲームスタート</button>
-                    <button id="skin-btn" class="btn secondary">スキン: 通常</button>
-                </div>
-            </div>
-            <div id="game-over-screen" class="screen hidden">
-                <h2 class="title">終了！</h2>
-                <p class="result-score">最終スコア: <span id="final-score">0</span></p>
-                <button id="restart-btn" class="btn">もう一度遊ぶ</button>
+            <div class="score-container">スコア: <span id="score">0</span></div>
+            <div class="timer-container">残り時間: <span id="timer">60</span></div>
+        </div>
+        <button id="pause-btn" class="pause-btn hidden">❚❚</button>
+        <div id="pause-screen" class="screen hidden">
+            <h2 class="title">一時停止</h2>
+            <div class="button-group">
+                <button id="resume-btn" class="btn">再開</button>
+                <button id="pause-restart-btn" class="btn secondary">最初からやり直す</button>
+                <button id="pause-top-btn" class="btn secondary">トップへ戻る</button>
             </div>
         </div>
+        <div id="start-screen" class="screen">
+            <h1 class="title">おにはそと！</h1>
+            <p class="subtitle">マウスで豆を投げて鬼を追い払おう！</p>
+            <div class="button-group">
+                <button id="start-btn" class="btn">ゲームスタート</button>
+                <button id="skin-btn" class="btn secondary">スキン: 通常</button>
+            </div>
+        </div>
+        <div id="game-over-screen" class="screen hidden">
+            <h2 class="title">終了！</h2>
+            <p class="result-score">最終スコア: <span id="final-score">0</span></p>
+            <div class="button-group">
+                <button id="restart-btn" class="btn">もう一度遊ぶ</button>
+                <button id="gameover-top-btn" class="btn secondary">トップへ戻る</button>
+            </div>
+        </div>
+    </div>
     </div>
     <script src="script.js"></script>
 </body>
