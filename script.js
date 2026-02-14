@@ -207,8 +207,18 @@ class Game {
     throwBean(x, y) {
         const startX = this.width / 2;
         const startY = this.height;
-        const angle = Math.atan2(y - startY, x - startX);
-        const speed = 12;
+
+        // Calculate angle and distance
+        const dx = x - startX;
+        const dy = y - startY;
+        const angle = Math.atan2(dy, dx);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        // Hybrid Approach:
+        // Variable speed based on distance, but with a cap.
+        // Base speed 12 (original), Max speed 16 (mild increase).
+        // Distance factor increased (divisor 60) to make acceleration smoother.
+        const speed = Math.min(16, 12 + dist / 60);
 
         this.beans.push(new Bean(startX, startY, Math.cos(angle) * speed, Math.sin(angle) * speed));
     }
