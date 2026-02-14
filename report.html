@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>節分アクションゲーム開発レポート</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        section {
+            background: #fff;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+            color: #2c3e50;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .code-term {
+            background-color: #f0f0f0;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 50px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>ブラウザ向け節分アクションゲーム開発レポート</h1>
+        <p class="date">作成日: 2026年2月14日</p>
+    </header>
+
+    <section>
+        <h2>プロジェクト概要</h2>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="images/title_screen.png" alt="ゲームタイトル画面"
+                style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.9em; color: #7f8c8d;">図1: ゲームタイトル画面のイメージ</p>
+        </div>
+        <p>
+            季節の行事である「節分」をテーマにした、ブラウザで動作するカジュアルアクションゲーム「おにはそと！」を開発いたしました。<br>
+            HTML5 CanvasとJavaScriptを使用し、特別なインストール不要で手軽に遊べるWebアプリケーションとして実装しています。
+        </p>
+    </section>
+
+    <section>
+        <h2>開発体制: 人間とAIの協働</h2>
+        <p>本プロジェクトは、人間の「アイデア・指示」と、AIエージェントの「実装・技術力」を組み合わせた新しい開発スタイルで進行しました。</p>
+        <div
+            style="background-color: #f0f8ff; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #3498db;">
+            <h3 style="margin-top: 0; color: #2980b9;">役割分担</h3>
+            <ul style="list-style-type: none; padding: 0;">
+                <li style="margin-bottom: 15px;">
+                    <strong>👤 人間 (ディレクター):</strong>
+                    <br>「節分をテーマにしたアクションゲームを作りたい」「フィーバータイムを入れて盛り上げたい」といった<span
+                        class="highlight">企画・要件定義・方向性の決定</span>を担当。
+                </li>
+                <li>
+                    <strong>🤖 AI (エンジニア & デザイナー):</strong>
+                    <br>コード設計、物理演算の実装、バグの原因特定と修正、最適な配色選定など、<span class="highlight">実作業のほぼ全て</span>を担当。
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>AIによる実装プロセスと解決事例</h2>
+
+        <h3>1. 曖昧な指示からの具体的実装</h3>
+        <p>
+            人間からの「豆を投げて鬼を退治する」というシンプルな指示に対し、AIは以下の機能を自律的に設計・実装しました。
+        </p>
+        <ul>
+            <li><strong>物理演算の導入:</strong> マウスカーソル位置への正確な投擲軌道計算。</li>
+            <li><strong>ゲームループの構築:</strong> 60fpsで滑らかに動作する描画更新処理。</li>
+            <li><strong>レスポンシブ対応:</strong> 画面サイズに合わせてキャンバスを自動調整する機能。</li>
+        </ul>
+
+        <h3>2. バグの自律的な発見と修正</h3>
+        <p>
+            開発中、敵キャラクターが画面端で停止してしまう予期せぬ挙動が発生しました。
+        </p>
+        <div style="text-align: center; margin: 20px 0;">
+            <img src="images/gameplay_normal.png" alt="ゲームプレイ分析"
+                style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <p style="font-size: 0.9em; color: #7f8c8d;">図2: AIがデバッグ・修正した敵の挙動</p>
+        </div>
+        <p>
+            人間は「敵が動かない」と報告したのみでしたが、AIはコードを解析し、<strong>ターゲット追従ロジックのベクトル計算ミスを特定</strong>。即座に修正コードを適用し、さらに単調さを防ぐための「揺らぎ」動作も提案・実装しました。
+        </p>
+
+        <h3>3. 抽象的なイメージの具現化（スキンシステム）</h3>
+        <p>
+            「かわいくして」という抽象的な要望に対し、AIは既存のアセットを使わず、Canvas APIの描画命令のみで以下のキャラクターデザインをコードとして生成しました。
+        </p>
+        <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
+            <div style="flex: 1; min-width: 300px; text-align: center;">
+                <img src="images/gameplay_normal.png" alt="通常スキン"
+                    style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <p style="font-size: 0.9em; color: #7f8c8d;">通常: 伝統的な「鬼」</p>
+            </div>
+            <div style="flex: 1; min-width: 300px; text-align: center;">
+                <img src="images/gameplay_cute.png" alt="かわいいスキン"
+                    style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <p style="font-size: 0.9em; color: #7f8c8d;">AI実装: 「マスコット風」デザイン</p>
+            </div>
+        </div>
+        <ul>
+            <li><strong>デザインコード化:</strong> 画像ファイルを使わず、円や曲線を組み合わせた描画関数として実装することで、軽量かつ柔軟な表現を実現しました。</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>ゲームバランス調整の自動提案</h2>
+        <p>
+            「終盤もっと盛り上げたい」というフィードバックに対し、AIは<strong>「フィーバータイム」</strong>の実装を提案しました。
+        </p>
+        <ul>
+            <li>残り時間7秒で背景演出を変更。</li>
+            <li>敵の出現頻度を動的に調整するアルゴリズムの実装。</li>
+            <li>これらは人間の詳細指示なしに、AIが「盛り上がり」を解釈してコードに落とし込んだ結果です。</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>ゲームバランス調整</h2>
+
+        <h3>フィーバータイムの導入</h3>
+        <p>
+            初期バージョンではゲーム終盤の盛り上がりが不足していたため、残り時間7秒から発動する「フィーバータイム」を実装しました。
+        </p>
+        <ul>
+            <li>画面全体に黄金のエフェクトを適用し、視覚的な高揚感を演出。</li>
+            <li>高得点の敵キャラクター出現率を大幅に上昇させ、一発逆転のチャンスを創出。</li>
+            <li>BGM（脳内補完）に合わせたスピーディーな展開を実現。</li>
+        </ul>
+
+        <h3>スコアリングとリスク管理</h3>
+        <ul>
+            <li><strong>福の神（あるいは幸運の猫）:</strong> 誤って攻撃すると減点となるキャラクターを配置し、単なる連打ゲームではない「見極め」の要素を追加しました。</li>
+            <li><span class="highlight">結果:</span> プレイヤーの集中力を維持しつつ、適度な緊張感を持たせることに成功しました。</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>技術仕様</h2>
+        <ul>
+            <li><strong>言語:</strong> HTML5, CSS3, JavaScript (ES6+)</li>
+            <li><strong>描画エンジン:</strong> Canvas API (2D Context)</li>
+            <li><strong>外部依存:</strong> Google Fonts (Mochiy Pop One) のみ。フレームワーク未使用による軽量動作。</li>
+        </ul>
+    </section>
+
+    <div class="footer">
+        <p>Report Generated by Development Team</p>
+    </div>
+
+</body>
+
+</html>

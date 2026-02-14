@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>おにはそと！ - 節分豆まきゲーム</title>
+    <meta name="description" content="マウス操作で鬼を追い払え！シンプルで楽しい節分アクションゲーム。">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud" class="hidden">
+                <div class="score-container">スコア: <span id="score">0</span></div>
+                <div class="timer-container">残り時間: <span id="timer">60</span></div>
+            </div>
+            <div id="start-screen" class="screen">
+                <h1 class="title">おにはそと！</h1>
+                <p class="subtitle">マウスで豆を投げて鬼を追い払おう！</p>
+                <div class="button-group">
+                    <button id="start-btn" class="btn">ゲームスタート</button>
+                    <button id="skin-btn" class="btn secondary">スキン: 通常</button>
+                </div>
+            </div>
+            <div id="game-over-screen" class="screen hidden">
+                <h2 class="title">終了！</h2>
+                <p class="result-score">最終スコア: <span id="final-score">0</span></p>
+                <button id="restart-btn" class="btn">もう一度遊ぶ</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
