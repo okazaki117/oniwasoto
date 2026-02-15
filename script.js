@@ -152,6 +152,7 @@ class Game {
             this.ui.pauseScreen.classList.add('hidden');
             this.ui.pauseBtn.classList.remove('hidden');
             this.lastTime = performance.now(); // Reset delta time
+            requestAnimationFrame(this.loop);
         }
     }
 
