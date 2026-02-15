@@ -422,7 +422,7 @@ class Game {
             this.ctx.font = 'bold 40px "Mochiy Pop One", sans-serif';
             this.ctx.fillStyle = `rgba(255, 215, 0, ${0.5 + Math.sin(Date.now() / 100) * 0.3})`;
             this.ctx.textAlign = 'center';
-            this.ctx.fillText('FEVER!!', this.width / 2, 200);
+            this.ctx.fillText('FEVER!!', this.width / 2, 250);
             this.ctx.restore();
         }
     }
