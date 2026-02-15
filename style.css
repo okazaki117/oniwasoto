@@ -145,7 +145,7 @@ canvas {
 /* HUD */
 #hud {
     position: absolute;
-    top: 20px;
+    top: 60px;
     left: 20px;
     right: 80px;
     /* Space for pause button */
@@ -171,7 +171,7 @@ canvas {
 
 .pause-btn {
     position: absolute;
-    top: 20px;
+    top: 60px;
     right: 20px;
     width: 50px;
     height: 50px;

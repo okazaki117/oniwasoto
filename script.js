@@ -202,6 +202,15 @@ class Game {
         this.ui.hud.classList.add('hidden');
         this.ui.pauseBtn.classList.add('hidden');
         this.ui.gameOverScreen.classList.remove('hidden');
+
+        // ボタンを一時的に隠す（連打対策）
+        const btns = this.ui.gameOverScreen.querySelector('.button-group');
+        if (btns) {
+            btns.classList.add('hidden');
+            setTimeout(() => {
+                btns.classList.remove('hidden');
+            }, 1000);
+        }
     }
 
     restart() {
@@ -413,7 +422,7 @@ class Game {
             this.ctx.font = 'bold 40px "Mochiy Pop One", sans-serif';
             this.ctx.fillStyle = `rgba(255, 215, 0, ${0.5 + Math.sin(Date.now() / 100) * 0.3})`;
             this.ctx.textAlign = 'center';
-            this.ctx.fillText('FEVER!!', this.width / 2, 100);
+            this.ctx.fillText('FEVER!!', this.width / 2, 150);
             this.ctx.restore();
         }
     }
